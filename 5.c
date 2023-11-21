@@ -1,32 +1,33 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include <ctype.h>
 #include <stdlib.h>
 
-
-void add(int number) {
+// Функция для определения положительности, отрицательности или нуля
+int bolishe_menchi(int number) {
     if (number > 0) {
-        printf("qqqqЧисло %d является положительным.\n", number);
+        return 0;  // Положительное число
     } else if (number < 0) {
-        printf("wwwwЧисло %d является отрицательным.\n", number);
+        return 1;  // Отрицательное число
     } else {
-        printf("eeeeЧисло %d является нулем.\n", number);
+        return 2;  // Ноль
     }
 }
 
-void add2(int array[], int size) {
+// Функция для возведения в квадрат отрицательных чисел в массиве
+void cvadrat(int array[], int size) {
     for (int i = 0; i < size; i++) {
         if (array[i] < 0) {
             array[i] = (int)pow(array[i], 2);  // Преобразование результата к целому типу
         }
-        printf("Элемент %d: %d\n", i, array[i]);
     }
 }
 
-void add3(int matrix[1000][1000],int rows, int cols ){
-    double porog = 1; // порог близких числе
+// Функция для подсчета чисел в матрице, близких к среднему арифметическому каждой строки
+int blizkii_chisla(int matrix[1000][1000], int rows, int cols) {
+    double porog = 1;  // Порог близких чисел
     int chet;
+    int totalChet = 0;
     for (int i = 0; i < rows; i++) {
         chet = 0;
         double colSum = 0;
@@ -34,59 +35,54 @@ void add3(int matrix[1000][1000],int rows, int cols ){
         for (int j = 0; j < cols; j++) {
             colSum += matrix[i][j];
         }
-        // средне арфмитическая
+        // Среднее арифметическое
         double cred = colSum / cols;
-        // fabs возвращает модуль игнорируя минусы,подсчет чисел близких к средене арифметическому
+        // fabs возвращает модуль, игнорируя минусы, подсчет чисел близких к среднему арифметическому
         for (int j = 0; j < cols; j++) {
             if (fabs(matrix[i][j] - cred) < porog) {
                 chet++;
             }
         }
-        printf("Строка %d: %d чисел близки к среднему арифметическому столбца.\n", i + 1, chet);
+        totalChet += chet;
     }
+    return totalChet;
 }
 
-
-void add4(int mainarray [1000],int size ,int n){
+// Функция для создания второго массива с элементами, удовлетворяющими критерию
+int* dinamick_massiv(int mainarray[1000], int size, int n, int* resultSize) {
     int j = 0;
 
-    //создания динамического массива
-    int *dinamickarray;
-    dinamickarray = (int *)malloc(size * sizeof(int));
+    // Создание динамического массива
+    int* dinamickarray;
+    dinamickarray = (int*)malloc(size * sizeof(int));
 
-    // отбор чисел по критерию из главного масива в динамический
+    // Отбор чисел по критерию из главного массива в динамический
     for (int i = 0; i < size; i++) {
         if (mainarray[i] > n) {
             dinamickarray[j] = mainarray[i];
             ++j;
         }
     }
-    // меняем местами числа в масиве
-    for (int i = 0; i < j / 2; i++) {
-        int temp = dinamickarray[i];
-        dinamickarray[i] = dinamickarray[j - i - 1];
-        dinamickarray[j - i - 1] = temp;
-    }
-    //выводим масив
-    printf("Второй массив с элементами, удовлетворяющими критерию:\n");
-    for (int i = 0; i < j; i++) {
-        printf("%d ", dinamickarray[i]);
-    }
-    //очищяем масив
-    free(dinamickarray);
+    // Устанавливаем размер результата
+    *resultSize = j;
+
+    return dinamickarray;
 }
 
-
+// Главная функция
 int main() {
     while (true) {
+        // Меню выбора функции
         printf("Введите номер функции 1, 2 (для массива), 0 (для выхода): ");
         int b;
         scanf("%d", &b);
 
+        // Обработка выбора
         if (b == 0) {
             printf("Программа завершена.\n");
             break;
         } else if (b == 1) {
+            // Проверка положительности, отрицательности или нуля введенного числа
             int c;
             printf("Введите число для проверки на положительность или отрицательность: ");
             scanf("%d", &c);
@@ -96,9 +92,17 @@ int main() {
                 continue;
             }
 
-            add(c);
+            int result = bolishe_menchi(c);
+            if (result == 0) {
+                printf("Число %d является положительным.\n", c);
+            } else if (result == 1) {
+                printf("Число %d является отрицательным.\n", c);
+            } else if (result == 2) {
+                printf("Число %d является нулем.\n", c);
+            }
 
         } else if (b == 2) {
+            // Изменение массива, вывод измененного массива
             int c;
             printf("Введите размер массива: ");
             int chet;
@@ -114,16 +118,19 @@ int main() {
                 }
             }
 
-            add2(mainarray, chet);
-        }
-
-        else if (b == 3){
+            cvadrat(mainarray, chet);
+            printf("Измененный массив:\n");
+            for (int i = 0; i < chet; i++) {
+                printf("Элемент %d: %d\n", i, mainarray[i]);
+            }
+        } else if (b == 3) {
+            // Подсчет чисел в матрице, близких к среднему арифметическому
             int rows, cols;
             printf("Введите количество строк: ");
             scanf("%d", &rows);
             printf("Введите количество столбцов: ");
             scanf("%d", &cols);
-            // создание матрицы
+            // Создание матрицы
             int matrix[rows][cols];
             printf("Введите элементы матрицы:\n");
             for (int i = 0; i < rows; i++) {
@@ -134,29 +141,39 @@ int main() {
                         continue;
                     }
                 }
-
             }
-            add3(matrix, rows, cols);
-        }
+            int result = blizkii_chisla(matrix, rows, cols);
+            printf("Общее количество чисел близких к среднему арифметическому в матрице: %d\n", result);
 
-        else if (b == 4){
+        } else if (b == 4) {
+            // Создание второго массива, удовлетворяющего критерию
             int size;
             printf("Введите размер массива: ");
             scanf("%d", &size);
             int mainarray[size];
             printf("Заполните массив:\n");
 
-            //заполнение главного массива
+            // Заполнение главного массива
             for (int i = 0; i < size; i++) {
                 scanf("%d", &mainarray[i]);
             }
 
-
-            //вводим критерии
+            int resultSize;
+            // Вводим критерии
             printf("Введите критерии заполнения второго массива: ");
             int n;
             scanf("%d", &n);
-            add4 (mainarray,size,n);
+            // Вызываем функцию для создания второго массива
+            int* result = dinamick_massiv(mainarray, size, n, &resultSize);
+
+            // Выводим результат в main
+            printf("Второй массив с элементами, удовлетворяющими критерию:\n");
+            for (int i = 0; i < resultSize; i++) {
+                printf("%d ", result[i]);
+            }
+
+            // Освобождаем память
+            free(result);
         }
     }
 
