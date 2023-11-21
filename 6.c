@@ -1,34 +1,46 @@
 #include <stdio.h>
+#include <string.h>
 
 
-//функция котора добавляет _  в нчало и конец каждого символа
-void add(char array[100][100], int size) {
-    for (int i = 0; i < size; ++i) {
-        printf("_%s_", array[i]);
+// Функция котороя добавляет симл '_' в массив перед каждым словом
+void niz(char words[][100], int size) {
+    for (int i = 0; i < size; i++) {
+        char result[200];  // Создаем временный буфер для результата
 
-        // Добавляем запятую после каждого элемента, кроме последнего
-        if (i < size - 1) {
-            printf(",");
-        }
+        strcpy(result, "");  // Инициализируем буфер пустой строкой
+
+        strcat(result, "_");    // Добавляем '_' в начало
+
+        strcat(result, words[i]);  // Добавляем исходное слово
+
+        strcat(result, "_");   // Добавляем '_' в конец
+
+        strcpy(words[i], result);   // Копируем результат обратно в исходное слово
     }
-    printf("\n");
 }
 
 int main() {
     int size;
-
-    printf("Введите размер массива: ");
+    printf("Введите количество слов в массиве: ");
     scanf("%d", &size);
 
-    char inputArray[100][100];// массив на 100 строк на 100 символов каждая
+    char words[size][100];
 
-    //заполняем массив
-    for (int i = 0; i < size; ++i) {
-        printf("Введите строку %d: ", i + 1);
-        scanf("%99s", inputArray[i]);
+    // Вводим слова в массив
+    printf("Введите слова в массив:\n");
+    for (int i = 0; i < size; i++) {
+        scanf("%s", words[i]);
     }
-    // используем наше функцию
-    add(inputArray, size);
+
+    // Вызываем функцию для добавления символов '_'
+    niz(words, size);
+
+    // Выводим измененный массив
+    printf("Измененный массив:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%s\n", words[i]);
+    }
 
     return 0;
 }
+
