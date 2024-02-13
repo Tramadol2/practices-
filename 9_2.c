@@ -13,7 +13,6 @@ struct Student {
     float physicsMark;
     float chemistryMark;
     void (*infoOutput)(struct Student *student);
-    bool (*StudentGroup)(struct Student *student, int group);
 };
 // Структура, представляющая узел в стеке
 struct Node {
