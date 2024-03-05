@@ -1,0 +1,12 @@
+# ninja log v5
+5	156	7304123242495139	CMakeFiles/untitled4.dir/main.c.obj	75139a0620b7cdfc
+156	425	7304123245148032	untitled4.exe	f11222a103d1b03b
+2	194	7307662768769804	build.ninja	1cadccf00350876b
+14	150	7304123242445255	CMakeFiles/untitled4.dir/stack.c.obj	f19ba8324cd58a42
+9	154	7304123242485149	CMakeFiles/untitled4.dir/student.c.obj	2f9014a84f1b1a5b
+4	185	7312782105449174	CMakeFiles/untitled4.dir/main.c.obj	75139a0620b7cdfc
+12	214	7312782105748347	CMakeFiles/untitled4.dir/student.c.obj	2f9014a84f1b1a5b
+11	135	7312783764130452	CMakeFiles/untitled4.dir/student.c.obj	2f9014a84f1b1a5b
+5	137	7312783764140424	CMakeFiles/untitled4.dir/main.c.obj	75139a0620b7cdfc
+18	144	7312783764210215	CMakeFiles/untitled4.dir/stack.c.obj	f19ba8324cd58a42
+144	382	7312783766563927	untitled4.exe	f11222a103d1b03b
