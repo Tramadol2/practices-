@@ -1,12 +1,6 @@
 #include "stack.h"
 #include <stdlib.h>
-
-
-
-void push_stack(void* arg) {
-    struct {
-        struct Stack* stack;
-        void* elem;
+\
     } *args = arg;
 
     struct Node* new_head = malloc(sizeof(struct Node));
